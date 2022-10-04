@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const moment = require('moment');
 const { getRoleColor } = require('../../Utils/getRoleColor');
@@ -10,7 +10,7 @@ module.exports = {
   async execute(interaction) {
     let color = getRoleColor(interaction.guild);
     let owner = await interaction.guild.members.fetch(interaction.guild.ownerId);
-    const serverInfoEmbed = new MessageEmbed()
+    const serverInfoEmbed = new EmbedBuilder()
       .setColor(color)
       .setTitle('Server Information')
       .addFields(

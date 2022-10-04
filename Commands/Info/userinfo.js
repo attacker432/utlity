@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const moment = require('moment');
 const { getRoleColor } = require('../../Utils/getRoleColor');
@@ -20,7 +20,7 @@ module.exports = {
       const perms = '```' + interaction.member.permissions.toArray().join(`\n`) + '```';
       let badges = '```' + interaction.member.user.flags.toArray().join(', ') + '```';
       if (badges === '``````') badges = '```None```';
-      userInfoEmbed = new MessageEmbed()
+      userInfoEmbed = new EmbedBuilder()
         .setColor(color)
         .setTitle('User Information')
         .addFields(

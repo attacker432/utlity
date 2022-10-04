@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { EmbedBuilder, MessageActionRow, MessageButton } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require('fs');
 const { helpEmojis, urls } = require('../../config.json');
@@ -36,33 +36,33 @@ module.exports = {
     fs.readdirSync('./Commands/Welcome').forEach((file) => {
       welcomeCmds += `/${file.slice(0, file.lastIndexOf('.'))} `;
     });
-
-    const helpEmbed = new MessageEmbed()
+   console.log(interaction.client.emojis.cache)
+    const helpEmbed = new EmbedBuilder()
       .setColor(color)
       .setTitle('Commands')
       .addFields(
         {
-          name: `${interaction.client.emojis.cache.get(staffEmojiId).toString()} Staff Commands`,
+          name: `**Staff Commands**`,
           value: `${'```' + staffCmds + '```'}`, inline: true
         },
         {
-          name: `${interaction.client.emojis.cache.get(infoEmojiId).toString()} Info Commands`,
+          name: `**Info Commands**`,
           value: `${'```' + infoCmds + '```'}`, inline: true
         },
         {
-          name: `${interaction.client.emojis.cache.get(loggingEmojiId).toString()} Role Commands`,
+          name: `**Role Commands**`,
           value: `${'```' + roleCmds + '```'}`, inline: true
         },
         {
-          name: `${interaction.client.emojis.cache.get(welcomeEmojiId).toString()} Welcome Comamnds`,
+          name: `**Welcome Comamnds**`,
           value: `${'```' + welcomeCmds + '```'}`, inline: true
         },
         {
-          name: `${interaction.client.emojis.cache.get(funEmojiId).toString()} Fun Commands`,
+          name: `**Fun Commands**`,
           value: `${'```' + funCmds + '```'}`, inline: true
         },
         {
-          name: `${interaction.client.emojis.cache.get(debugEmojiId).toString()} Debug Commands`,
+          name: `**Debug Commands**`,
           value: `${'```' + debugCmds + '```'}`, inline: true
         }
       )

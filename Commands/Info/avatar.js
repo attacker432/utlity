@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { getRoleColor } = require('../../Utils/getRoleColor');
 
@@ -15,7 +15,7 @@ module.exports = {
     let color = getRoleColor(interaction.guild);
     let avatarEmbed;
     if (!user) {
-      avatarEmbed = new MessageEmbed()
+      avatarEmbed = new EmbedBuilder()
         .setColor(color)
         .setTitle('Your avatar')
         .setImage(interaction.member.user.displayAvatarURL({
@@ -25,7 +25,7 @@ module.exports = {
         }))
         .setTimestamp();
     } else {
-      avatarEmbed = new MessageEmbed()
+      avatarEmbed = new EmbedBuilder()
         .setColor(color)
         .setTimestamp()
         .setTitle(`${user.username}'s avatar`)
