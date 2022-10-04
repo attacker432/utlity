@@ -23,6 +23,7 @@ module.exports = async (client, interaction) => {
 
     if (command.botRequiredPerms) {
       command.botRequiredPerms.forEach(async (perm) => {
+        console.log(interaction)
         if (!interaction.guild.me.permissions.has(perm)) {
           err = 1;
           interaction.reply({ content: `I need the following permission to run this: ${'`' + perm + '`'}`, ephemeral: true });

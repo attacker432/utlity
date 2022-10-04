@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, MessageButton } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require('fs');
 const { helpEmojis, urls } = require('../../config.json');
@@ -71,23 +71,23 @@ module.exports = {
       new ButtonBuilder()
         .setLabel('Add me')
         .setURL(botInviteLink)
-        .setStyle('LINK'),
+        .setStyle('Link'),
       new ButtonBuilder()
         .setLabel('Support')
         .setURL(discordInviteLink)
-        .setStyle('LINK'),
+        .setStyle('Link'),
       new ButtonBuilder()
         .setLabel('Vote!')
         .setURL(topgg)
-        .setStyle('LINK'),
+        .setStyle('Link'),
       new ButtonBuilder()
         .setLabel('Website')
         .setURL(website)
-        .setStyle('LINK'),
-      new MessageButton()
+        .setStyle('Link'),
+      new ButtonBuilder()
         .setLabel('Code')
         .setURL(github)
-        .setStyle('LINK')
+        .setStyle('Link')
     );
     interaction.reply({ embeds: [helpEmbed], components: [links] });
   }
