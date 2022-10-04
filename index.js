@@ -1,8 +1,11 @@
 const { readdirSync } = require('fs');
-const { Client, Collection } = require('discord.js');
+const { Client, Collection, GatewayIntentBits  } = require('discord.js');
 const client = new Client({
   partials: ['MESSAGE', 'REACTION'],
-  intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS']
+  intents: [GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMembers,]
 });
 
 let commands = [];
