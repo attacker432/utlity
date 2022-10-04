@@ -53,14 +53,17 @@ module.exports = {
 
       const banEmbed = new EmbedBuilder()
         .setColor(color)
-        .setTitle(`${interaction.client.emojis.cache.get(pinEmojiId).toString()} Ban Information`)
+        .setTitle(`**Ban Information**`)
         .addFields(
           { name: `Defendant's name:`, value: `${member.user.tag}` },
           { name: `Issued by:`, value: `${author}` },
           { name: `Duration:`, value: `Permanent` }
         )
-        .setFooter(`You can use /unban ${member.user.username} to unban ${member.user.username} earlier or /baninfo ${member.user.username} to view information about his ban.`)
-        .setTimestamp();
+        .setFooter(  {
+    text: `Command Requested by: ${interaction.user.tag} || You can use /unban ${member.user.username} to unban ${member.user.username} earlier than ${days} days or /baninfo ${member.user.username} to view information about his ban.`,
+    iconURL: interaction.user.displayAvatarURL(),
+  })
+      .setTimestamp();
       let msg = `${author} has permanently banned you from ${interaction.guild.name}.`;
       let BanInfo = {};
       BanInfo.userID = member.user.id;
@@ -116,13 +119,9 @@ module.exports = {
       }
 
       let bannedUsersArr = await bannedUsers.get(interaction.guild.id);
-      let guilds = await punishments.get('guilds');
-      if (!guilds.includes(interaction.guild.id)) guilds.push(interaction.guild.id);
       if (!bannedUsersArr) bannedUsersArr = [];
       bannedUsersArr.push(BanInfo);
-      await bannedUsers.set(interaction.guild.id, bannedUsersArr);
-      await punishments.set('guilds', guilds);
-      await sendLog(interaction, banEmbed);
+      await sendLog(interaction, msg);
       if (!member.user.bot) await member.send({ content: msg });
       await bns.set(`bans_${member.id}_${interaction.guild.id}`, bans);
       await member.ban();
