@@ -121,9 +121,11 @@ module.exports = {
       let bannedUsersArr = await bannedUsers.get(interaction.guild.id);
       if (!bannedUsersArr) bannedUsersArr = [];
       bannedUsersArr.push(BanInfo);
-      await sendLog(interaction, msg);
+      await sendLog(interaction, banEmbed);
       if (!member.user.bot) await member.send({ content: msg });
       await bns.set(`bans_${member.id}_${interaction.guild.id}`, bans);
+      if (!bannedUsersArr) bannedUsersArr = [];
+      bannedUsersArr.push(BanInfo);
       await member.ban();
     }
   }
