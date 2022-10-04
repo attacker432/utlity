@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Keyv = require('keyv');
 const bns = new Keyv(process.env.bns);
@@ -51,7 +51,7 @@ module.exports = {
       if (!bans) bans = 1;
       else bans++;
 
-      const banEmbed = new MessageEmbed()
+      const banEmbed = new EmbedBuilder()
         .setColor(color)
         .setTitle(`${interaction.client.emojis.cache.get(pinEmojiId).toString()} Ban Information`)
         .addFields(
@@ -89,15 +89,18 @@ module.exports = {
       if (!bans) bans = 1;
       else bans = bans + 1;
 
-      const banEmbed = new MessageEmbed()
+      const banEmbed = new EmbedBuilder()
         .setColor(color)
-        .setTitle(`${interaction.client.emojis.cache.get(pinEmojiId).toString()} Ban Information`)
+        .setTitle(`**Ban Information**`)
         .addFields(
           { name: `Defendant's name:`, value: `${member}` },
           { name: `Issued by:`, value: `${author}` },
           { name: `Duration:`, value: `${days} days` }
         )
-        .setFooter(`You can use /unban ${member.user.username} to unban ${member.user.username} earlier than ${days} days or /baninfo ${member.user.username} to view information about his ban.`)
+       .setFooter(  {
+    text: `Command Requested by: ${interaction.user.tag} || You can use /unban ${member.user.username} to unban ${member.user.username} earlier than ${days} days or /baninfo ${member.user.username} to view information about his ban.`,
+    iconURL: interaction.user.displayAvatarURL(),
+  })
         .setTimestamp();
       const millisecondsPerDay = 24 * 60 * 60 * 1000;
       let BanInfo = {};
