@@ -1,4 +1,4 @@
-const { EmbedBuilder, MessageActionRow, MessageButton } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, MessageButton } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fs = require('fs');
 const { helpEmojis, urls } = require('../../config.json');
@@ -67,20 +67,20 @@ module.exports = {
         }
       )
       .setTimestamp();
-    const links = new MessageActionRow().addComponents(
-      new MessageButton()
+    const links = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
         .setLabel('Add me')
         .setURL(botInviteLink)
         .setStyle('LINK'),
-      new MessageButton()
+      new ButtonBuilder()
         .setLabel('Support')
         .setURL(discordInviteLink)
         .setStyle('LINK'),
-      new MessageButton()
+      new ButtonBuilder()
         .setLabel('Vote!')
         .setURL(topgg)
         .setStyle('LINK'),
-      new MessageButton()
+      new ButtonBuilder()
         .setLabel('Website')
         .setURL(website)
         .setStyle('LINK'),
