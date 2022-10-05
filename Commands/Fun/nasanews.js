@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fetch = require('node-fetch');
 const { getRoleColor } = require('../../Utils/getRoleColor');
@@ -21,11 +21,11 @@ module.exports = {
     }
 
     let color = getRoleColor(interaction.guild);
-    const nasaSearchEmbed = new MessageEmbed()
+    const nasaSearchEmbed = new EmbedBuilder()
       .setColor(color)
       .setTitle(data.collection.items[0].data[0].title)
       .setDescription(data.collection.items[0].data[0].description)
-      .setImage(data.collection.items[0].links[0].href.split(' ').join('%20'))
+      .setImage(data.collection.items[0].links[0].href.split(` `).join('%20'))
       .setTimestamp();
     interaction.reply({ embeds: [nasaSearchEmbed] });
   }

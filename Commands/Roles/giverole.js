@@ -49,11 +49,11 @@ module.exports = {
         { name: 'Permissions', value: `${perms}` }
         )
     .setFooter(  {
-    text: `Command Requested by: ${interaction.user.tag} || You can now use **/takerole** to remove ${role} from ${member.username}.`,
+    text: `Command Requested by: ${interaction.user.tag} || You can now use **/takerole** to remove ${role} from ${member.user.username}.`,
     iconURL: interaction.user.displayAvatarURL(),
   })
       .setTimestamp();
     //await sendLog(interaction, giveRoleEmbed);
-    interaction.reply(`Successfully gave role: ${role} to ${member.username} || **command requested by:** ${interaction.author}`)
+    interaction.reply(`> Successfully gave role: ${role} to **${member.user.username}** || command requested by: **${interaction.user.tag}**`)
   }
 }

@@ -49,12 +49,12 @@ module.exports = {
         { name: 'Permissions', value: `${perms}` }
         )
     .setFooter(  {
-    text: `Command Requested by: ${interaction.user.tag} || You can now use **/giverole** to give ${role} to ${member.username}.`,
+    text: `Command Requested by: ${interaction.user.tag} || You can now use **/giverole** to give ${role} to ${member.user.username}.`,
     iconURL: interaction.user.displayAvatarURL(),
   })
       .setTimestamp();
     //await sendLog(interaction, giveRoleEmbed);
-   await console.log(member.user.username)
-    interaction.reply(`Successfully took role: ${role} from ${member.username} || **command requested by:** ${interaction.author}`)
+   await console.log(interaction)
+    interaction.reply(`> Successfully took role: ${role} from **${member.user.username}** || command requested by: **${interaction.user.tag}**`)
   }
 }
