@@ -47,8 +47,13 @@ module.exports = {
         { name: 'By', value: `${interaction.member.user.username}` },
         { name: 'Role', value: `${role.name}` },
         { name: 'Permissions', value: `${perms}` }
-      )
+        )
+    .setFooter(  {
+    text: `Command Requested by: ${interaction.user.tag} || You can now use **/takerole** to remove ${role} from ${member.username}.`,
+    iconURL: interaction.user.displayAvatarURL(),
+  })
       .setTimestamp();
-    await sendLog(interaction, giveRoleEmbed);
+    //await sendLog(interaction, giveRoleEmbed);
+    interaction.reply(giveRoleEmbed)
   }
 }

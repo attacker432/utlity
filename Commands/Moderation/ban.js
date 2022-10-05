@@ -69,17 +69,17 @@ module.exports = {
       BanInfo.userID = member.user.id;
       BanInfo.username = member.user.username;
       BanInfo.author = author;
-      if (reason) {
-        banEmbed.addField('Reason', reason);
+    /*  if (reason) {
+        banEmbed.addFields('Reason', reason);
         msg += ` Reason: ${reason}.`;
         BanInfo.reason = '`' + reason + '`';
-      }
-
+      } 
+   */
       let bannedUsersArr = await bannedUsers.get(interaction.guild.id);
       if (!bannedUsersArr) bannedUsersArr = [];
       bannedUsersArr.push(BanInfo);
       await bannedUsers.set(interaction.guild.id, bannedUsersArr);
-      await sendLog(interaction, banEmbed);
+      await sendLog(interaction, msg);
       if (!member.user.bot) await member.send({ content: msg });
       await bns.set(`bans_${member.id}_${interaction.guild.id}`, bans);
       await member.ban();
@@ -112,11 +112,11 @@ module.exports = {
       BanInfo.unbanDate = Date.now() + days * millisecondsPerDay;
       BanInfo.author = author;
       let msg = `${author} has permanently banned you from ${interaction.guild.name}. Duration: ${days} days.`;
-      if (reason) {
+    /*  if (reason) {
         banEmbed.addField('Reason', reason);
         msg += ` Reason: ${reason}`;
         BanInfo.reason = reason;
-      }
+      } */
 
       let bannedUsersArr = await bannedUsers.get(interaction.guild.id);
       if (!bannedUsersArr) bannedUsersArr = [];
