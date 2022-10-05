@@ -80,10 +80,10 @@ module.exports = {
         .setLabel('Vote!')
         .setURL(topgg)
         .setStyle('Link'),
-      new ButtonBuilder()
+     /* new ButtonBuilder()
         .setLabel('Website')
         .setURL(website)
-        .setStyle('Link'),
+        .setStyle('Link'), */ // Website is not here yet
       new ButtonBuilder()
         .setLabel('Code')
         .setURL(github)
