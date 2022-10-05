@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { pinEmojiId } = require('../../config.json');
 const { getRoleColor } = require('../../Utils/getRoleColor');
@@ -39,9 +39,9 @@ module.exports = {
     let perms = role.permissions.toArray().map((perm) => perm).join(`\n`);
     perms = '```' + perms + '```';
     let color = getRoleColor(interaction.guild);
-    const giveRoleEmbed = new MessageEmbed()
+    const giveRoleEmbed = new EmbedBuilder()
       .setColor(color)
-      .setTitle(`${interaction.client.emojis.cache.get(pinEmojiId).toString()} Given Role`)
+      .setTitle(`**__Given Role__**`)
       .addFields(
         { name: 'To', value: `${member}` },
         { name: 'By', value: `${interaction.member.user.username}` },
