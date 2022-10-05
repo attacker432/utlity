@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder, EmbedBuilder } = require('@discordjs/builders');
 const Keyv = require('keyv');
 const welcomeRoles = new Keyv(process.env.welcomeRoles);
 const { sendLog } = require('../../Utils/sendLog');
@@ -18,7 +18,18 @@ module.exports = {
     const welcomeRole = interaction.options.getRole('role');
     let botHighestRole = -1;
     let highestRole = -1;
-    interaction.guild.me.roles.cache.map((r) => {
+     const WelcomeEmbed = new EmbedBuilder()
+        .setColor('#577565')
+        .setTitle(`**Welcome role**`)
+        .addFields(
+          { name: `Welcome role set to:`, value: welcomeRole.name }
+        )
+        .setFooter(  {
+    text: `Command Requested by: ${interaction.user.tag}`,
+    iconURL: interaction.user.displayAvatarURL(),
+  })
+      .setTimestamp();
+    interaction.guild.roles.cache.map((r) => {
       if (r.position > botHighestRole) botHighestRole = r.position;
     });
 
