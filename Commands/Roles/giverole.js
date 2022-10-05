@@ -27,7 +27,7 @@ module.exports = {
       return interaction.reply({ content: `${member.user.username} already has that role.`, ephemeral: true })
     }
 
-    if (interaction.guild.me.roles.highest.comparePositionTo(role) <= 0) {
+    if (interaction.guild.roles.highest.comparePositionTo(role) <= 0) {
       return interaction.reply({ content: `My roles must be higher than the role that you want to give!`, ephemeral: true });
     }
     
