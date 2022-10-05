@@ -54,6 +54,6 @@ module.exports = {
   })
       .setTimestamp();
     //await sendLog(interaction, giveRoleEmbed);
-    interaction.reply(giveRoleEmbed)
+    interaction.reply(`Successfully gave role: ${role} to ${member.username} || **command requested by:** ${interaction.author}`)
   }
 }
