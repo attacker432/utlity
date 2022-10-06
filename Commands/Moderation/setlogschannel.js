@@ -14,7 +14,8 @@ module.exports = {
   requiredPerms: ['MANAGE_GUILD'],
   async execute(interaction) {
     const channel = interaction.options.getChannel('channel-name');
-    if (!channel || channel.type !== 'GUILD_TEXT') {
+    console.log(channel.type)
+    if (!channel || channel.type !== 0) {
       return interaction.reply({ content: `Invalid channel.`, ephemeral: true });
     }
 
