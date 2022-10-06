@@ -28,11 +28,11 @@ module.exports = {
   requiredPerms: ['BAN_MEMBERS'],
   botRequiredPerms: ['BAN_MEMBERS'],
   async execute(interaction) {
-    const member = interaction.options.getMember('user');
-    const user = interaction.options.getUser('user');
-    const days = interaction.options.getNumber('days');
-    const reason = interaction.options.getString('reason');
-    const author = interaction.member.user.username;
+    var member = interaction.options.getMember('user');
+    let user = interaction.options.getUser('user');
+    let days = interaction.options.getNumber('days');
+    let reason = interaction.options.getString('reason');
+    let author = interaction.member.user.username;
     if (user.id == interaction.member.user.id) {
       return interaction.reply({ content: `You can't ban youself, smarty pants!`, ephemeral: true });
     }
@@ -69,17 +69,13 @@ module.exports = {
       BanInfo.userID = member.user.id;
       BanInfo.username = member.user.username;
       BanInfo.author = author;
-    /*  if (reason) {
-        banEmbed.addFields('Reason', reason);
-        msg += ` Reason: ${reason}.`;
-        BanInfo.reason = '`' + reason + '`';
-      } 
-   */
+     if(!reason){reason = 'No reason given'}
       let bannedUsersArr = await bannedUsers.get(interaction.guild.id);
       if (!bannedUsersArr) bannedUsersArr = [];
       bannedUsersArr.push(BanInfo);
       await bannedUsers.set(interaction.guild.id, bannedUsersArr);
-      await sendLog(interaction, msg);
+   //   await sendLog(interaction, msg);
+      interaction.reply({embeds: [banEmbed]})
       if (!member.user.bot) await member.send({ content: msg });
       await bns.set(`bans_${member.id}_${interaction.guild.id}`, bans);
       await member.ban();
@@ -111,17 +107,11 @@ module.exports = {
       BanInfo.username = member.user.username;
       BanInfo.unbanDate = Date.now() + days * millisecondsPerDay;
       BanInfo.author = author;
-      let msg = `${author} has permanently banned you from ${interaction.guild.name}. Duration: ${days} days.`;
-    /*  if (reason) {
-        banEmbed.addField('Reason', reason);
-        msg += ` Reason: ${reason}`;
-        BanInfo.reason = reason;
-      } */
-
+      let msg = `**${author}** has banned you from **${interaction.guild.name}**. Duration: **${days}** days. Reason: __${reason}__`;
       let bannedUsersArr = await bannedUsers.get(interaction.guild.id);
       if (!bannedUsersArr) bannedUsersArr = [];
       bannedUsersArr.push(BanInfo);
-      await sendLog(interaction, banEmbed);
+      interaction.reply({embeds: [banEmbed]})
       if (!member.user.bot) await member.send({ content: msg });
       await bns.set(`bans_${member.id}_${interaction.guild.id}`, bans);
       if (!bannedUsersArr) bannedUsersArr = [];

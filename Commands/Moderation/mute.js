@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Keyv = require('keyv');
 const mts = new Keyv(process.env.mts);
@@ -73,15 +73,15 @@ module.exports = {
     await mts.set(`mutes_${member.id}_${interaction.guild.id}`, mutes);
     member.roles.add(mutedRole);
     let color = getRoleColor(interaction.guild);
-    const muteEmbed = new MessageEmbed()
+    const muteEmbed = new EmbedBuilder()
       .setColor(color)
-      .setTitle(`${interaction.client.emojis.cache.get(pinEmojiId).toString()} Mute Information`)
+      .setTitle(`> **__Mute Information__**`)
       .addFields(
         { name: `Defendant's name:`, value: `${member.user.tag}` },
         { name: `Issued by:`, value: `${author}` },
         { name: `Duration:`, value: `${mins} minutes` },
       )
-      .setFooter(`You can use /unmute to unmute the user earlier than ${mins} minutes and /muteinfo to view information about his mute.`)
+     // .setFooter(`You can use /unmute to unmute the user earlier than ${mins} minutes and /muteinfo to view information about his mute.`)
       .setTimestamp();
     const millisecondsPerMinute = 60 * 1000;
     let MuteInfo = {};
@@ -89,11 +89,7 @@ module.exports = {
     MuteInfo.unmuteDate = Date.now() + mins * millisecondsPerMinute;
     MuteInfo.author = author;
     let msg = `${author} has muted you from ${interaction.guild.name}. Duration: ${mins} minutes.`;
-    if (reason) {
-      muteEmbed.addField('Reason', reason);
-      msg += ` Reason: ${reason}.`;
-      MuteInfo.reason = reason;
-    }
+if(!reason){reason = ''}
 
     if (!member.user.bot) member.send({ content: msg });
     let mutedMembersArr = await mutedMembers.get(interaction.guild.id);
@@ -103,6 +99,7 @@ module.exports = {
     mutedMembersArr.push(MuteInfo);
     await mutedMembers.set(interaction.guild.id, mutedMembersArr);
     await punishments.set('guilds', guilds);
-    await sendLog(interaction, muteEmbed);
+  //  await sendLog(interaction, muteEmbed);
+    interaction.reply({embeds: [muteEmbed]})
   }
 }

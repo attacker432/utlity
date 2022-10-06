@@ -23,7 +23,7 @@ module.exports = {
   botRequiredPerms: ['KICK_MEMBERS'],
   async execute(interaction) {
     const member = interaction.options.getMember('user');
-    const reason = interaction.options.getString('reason');
+    let reason = interaction.options.getString('reason');
     if (member.id == interaction.member.user.id) {
       return interaction.reply({ content: `I mean you could just leave the server.`, ephemeral: true });
     }
@@ -52,7 +52,7 @@ module.exports = {
         { name: `Reason:`, value: `> ${reason}` }
       )
       .setTimestamp();
-    let msg = `${author} kicked you from ${interaction.guild.name}.`;
+    let msg = `**${author}** kicked you from **${interaction.guild.name}**. Reason: ${reason}`;
     
     if (!member.user.bot) await member.send({ content: msg });
     //await sendLog(interaction, kickEmbed);
