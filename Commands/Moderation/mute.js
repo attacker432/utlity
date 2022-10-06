@@ -29,12 +29,12 @@ module.exports = {
   requiredPerms: ['KICK_MEMBERS'],
   botRequiredPerms: ['MANAGE_ROLES', 'MANAGE_CHANNELS'],
   async execute(interaction) {
-    const member = interaction.options.getMember('user');
-    const user = interaction.options.getUser('user');
-    const mins = interaction.options.getNumber('minutes');
-    const reason = interaction.options.getString('reason');
-    const author = interaction.member.user.username;
-    let mutedRole = interaction.guild.roles.cache.find((r) => r.name === 'Muted Member');
+    var member = interaction.options.getMember('user');
+    var user = interaction.options.getUser('user');
+    var mins = interaction.options.getNumber('minutes');
+    var reason = interaction.options.getString('reason');
+    var author = interaction.member.user.username;
+   // let mutedRole = interaction.guild.roles.cache.find((r) => r.name === 'Muted Member');
     if (mins > 720 || mins <= 0) {
       return interaction.reply({ content: `Minutes must be a positive number lower than 720.`, ephemeral: true });
     }
@@ -51,27 +51,11 @@ module.exports = {
     if (!mutes) mutes = 1;
     else mutes = mutes + 1;
 
-    if (!mutedRole) {
-      const newMutedRole = await interaction.guild.roles.create({
-        name: 'Muted Member',
-        permissions: []
-      });
-      interaction.guild.channels.cache.forEach(async (channel) => {
-        await channel.permissionOverwrites.edit(newMutedRole, {
-          'SEND_MESSAGES': false,
-          'ADD_REACTIONS': false,
-          'SPEAK': false
-        });
-      });
-      mutedRole = newMutedRole;
-    }
-
-    if (member.roles.cache.has(mutedRole.id)) {
+   /* if (member.roles.cache.has(mutedRole.id)) {
       return interaction.reply({ content: `${user.username} is already muted!`, ephemeral: true });
-    }
+    } */
 
     await mts.set(`mutes_${member.id}_${interaction.guild.id}`, mutes);
-    member.roles.add(mutedRole);
     let color = getRoleColor(interaction.guild);
     const muteEmbed = new EmbedBuilder()
       .setColor(color)
@@ -85,21 +69,25 @@ module.exports = {
       .setTimestamp();
     const millisecondsPerMinute = 60 * 1000;
     let MuteInfo = {};
+    let time = 0;
+    time = mins * 1000 * 60;
     MuteInfo.userID = member.id;
     MuteInfo.unmuteDate = Date.now() + mins * millisecondsPerMinute;
     MuteInfo.author = author;
-    let msg = `${author} has muted you from ${interaction.guild.name}. Duration: ${mins} minutes.`;
-if(!reason){reason = ''}
+    let msg = `You have received a timeout from **${author}** in **${interaction.guild.name}**. Duration: ${mins} minutes. Reason: ${reason}`;
+    if(!reason){reason = 'No reason given'}
 
     if (!member.user.bot) member.send({ content: msg });
+    member.timeout(time, reason);
     let mutedMembersArr = await mutedMembers.get(interaction.guild.id);
-    let guilds = await punishments.get('guilds');
-    if (!mutedMembersArr) mutedMembersArr = [];
-    if (!guilds.includes(interaction.guild.id)) guilds.push(interaction.guild.id);
-    mutedMembersArr.push(MuteInfo);
-    await mutedMembers.set(interaction.guild.id, mutedMembersArr);
-    await punishments.set('guilds', guilds);
+   // let guilds = await punishments.get('guilds');
+  //  if (!mutedMembersArr) mutedMembersArr = [];
+//    if (!guilds.includes(interaction.guild.id)) guilds.push(interaction.guild.id);
+//    mutedMembersArr.push(MuteInfo);
+    //await mutedMembers.set(interaction.guild.id, mutedMembersArr);
+    //await punishments.set('guilds', guilds);
   //  await sendLog(interaction, muteEmbed);
     interaction.reply({embeds: [muteEmbed]})
+    
   }
 }
