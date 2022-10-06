@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Keyv = require('keyv');
 const suggestionChannels = new Keyv(process.env.suggestionChannels);
@@ -46,7 +46,7 @@ module.exports = {
 
     const oldSuggestionEmbed = suggestionMessage.embeds[0];
     if(status === 'accept') {
-      const newSuggestionEmbed = new MessageEmbed()
+      const newSuggestionEmbed = new EmbedBuilder()
         .setColor(suggestionAccepted.color)
         .setTitle(oldSuggestionEmbed.title)
         .setDescription(oldSuggestionEmbed.description)
@@ -54,7 +54,7 @@ module.exports = {
       suggestionMessage.edit({ embeds: [newSuggestionEmbed] });
       state = 'approved';
     } else if (status === 'decline') {
-      const newSuggestionEmbed = new MessageEmbed()
+      const newSuggestionEmbed = new EmbedBuilder()
         .setColor(suggestionDeclined.color)
         .setTitle(oldSuggestionEmbed.title)
         .setDescription(oldSuggestionEmbed.description)
