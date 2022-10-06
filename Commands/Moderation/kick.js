@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Keyv = require('keyv');
 const kks = new Keyv(process.env.kks);
@@ -42,22 +42,21 @@ module.exports = {
     else kicks++;
 
     let color = getRoleColor(interaction.guild);
-    const kickEmbed = new MessageEmbed()
+    if(!reason){reason = 'No reason given :('}
+    const kickEmbed = new EmbedBuilder()
       .setColor(color)
-      .setTitle(`${interaction.client.emojis.cache.get(pinEmojiId).toString()} Kick Information`)
+      .setTitle(`> **__Kick Information__**`)
       .addFields(
-        { name: `Defendant's name:`, value: `${member.user.tag}` },
-        { name: `Issued by:`, value: `${author}` }
+        { name: `Defendant's name:`, value: `> ${member.user.tag}` },
+        { name: `Issued by:`, value: `> ${author}` },
+        { name: `Reason:`, value: `> ${reason}` }
       )
       .setTimestamp();
     let msg = `${author} kicked you from ${interaction.guild.name}.`;
-    if (reason) {
-      kickEmbed.addField('Reason', reason);
-      msg += ` Reason: ${reason}`;
-    }
     
     if (!member.user.bot) await member.send({ content: msg });
-    await sendLog(interaction, kickEmbed);
+    //await sendLog(interaction, kickEmbed);
+    interaction.reply({embeds: [kickEmbed]})
     await kks.set(`kicks_${member.id}_${interaction.guild.id}`, kicks);
     member.kick();
   }

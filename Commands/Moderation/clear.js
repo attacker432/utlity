@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { pinEmojiId } = require('../../config.json');
 const { getRoleColor } = require('../../Utils/getRoleColor');
@@ -23,15 +23,16 @@ module.exports = {
 
     interaction.channel.bulkDelete(amount, true);
     let color = getRoleColor(interaction.guild);
-    const clearEmbed = new MessageEmbed()
+    const clearEmbed = new EmbedBuilder()
       .setColor(color)
-      .setTitle(`${interaction.client.emojis.cache.get(pinEmojiId).toString()} Cleared Messages`)
+      .setTitle(`> __**Cleared Messages**__`)
       .addFields(
-        { name: 'Cleared by:', value: `${interaction.member.user.username}` },
-        { name: 'Amount of Messages Deleted:', value: `${amount}` },
-        { name: 'Channel:', value: `${interaction.channel.name}` }
+        { name: 'Cleared by:', value: `> **${interaction.member.user.username}**` },
+        { name: 'Amount of Messages Deleted:', value: `> **${amount}**` },
+        { name: 'Channel:', value: `> **${interaction.channel.name}**` }
       )
       .setTimestamp();
-    sendLog(interaction, clearEmbed);
+     interaction.reply({ embeds: [clearEmbed] });
+   // sendLog(interaction, clearEmbed);
   }
 }
