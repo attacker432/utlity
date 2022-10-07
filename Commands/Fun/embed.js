@@ -1,6 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const fetch = require('node-fetch');
 const { getRoleColor } = require('../../Utils/getRoleColor');
 
 module.exports = {
@@ -11,22 +10,20 @@ module.exports = {
       .setName('message')
       .setDescription('The content you want to embed.')
       .setRequired(true)
-    )
-  .addStringOption((option) => option
-      .setName('color')
-      .setDescription('The color of the embed.')
-      .setRequired(true)
     ),
   async execute(interaction) {
   
 
-    let color = interaction.options.color;
-    const nasaSearchEmbed = new EmbedBuilder()
+      let color = getRoleColor(interaction.guild);
+    const Embed = new EmbedBuilder()
       .setColor(color)
-      .setTitle()
-      .setDescription(data.collection.items[0].data[0].description)
-      .setImage(data.collection.items[0].links[0].href.split(` `).join('%20'))
-      .setTimestamp();
-    interaction.reply({ embeds: [nasaSearchEmbed] });
+      .setTitle(`Embedded message from ${interaction.user.username}`)
+      .setDescription(interaction.options.getString('message'))
+       .setFooter(  {
+    text: `Command requested by ${interaction.user.username}.`,
+    iconURL: interaction.user.displayAvatarURL(),
+  })
+    .setTimestamp();
+    interaction.reply({ embeds: [Embed] });
   }
 }
