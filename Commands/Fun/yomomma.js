@@ -14,6 +14,6 @@ module.exports = {
     const member = interaction.options.getMember('user');
     const response = await fetch('https://api.yomomma.info/');
     const data = await response.json();
-    interaction.reply({ content: `${member}, ${data.joke}` });
+    interaction.reply({ content: `> ${member}, ${data.joke}` });
   }
 }
