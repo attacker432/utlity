@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const Keyv = require('keyv');
 const suggestionChannels = new Keyv(process.env.suggestionChannels);
@@ -64,7 +64,7 @@ module.exports = {
     else leaveMessageState = 'disabled';
 
     let color = getRoleColor(interaction.guild);
-    const botSettingsEmbed = new MessageEmbed()
+    const botSettingsEmbed = new EmbedBuilder()
       .setColor(color)
       .setTitle(`Server settings for ${interaction.guild.name}`)
       .addFields(
