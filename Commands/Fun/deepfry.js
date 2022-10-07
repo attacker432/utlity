@@ -22,7 +22,10 @@ module.exports = {
     }).catch(error=>{console.log(`Error found in deepfry.js: ${error}`)});
     const bufferArray = await response.arrayBuffer();
     const buffer = Buffer.from(bufferArray);
-    const image = new AttachmentBuilder(buffer);
+    
+    const image = new AttachmentBuilder(buffer, {name: `${interaction.user.username}'s pfp blurred.png`});
+   image.name = (interaction.user.username + 'Blur');
+    console.log(image);
     interaction.editReply({ files: [image] });
   }
 }
