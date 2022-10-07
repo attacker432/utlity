@@ -64,9 +64,11 @@ module.exports = {
         { name: `Defendant's name:`, value: `${member.user.tag}` },
         { name: `Issued by:`, value: `${author}` },
         { name: `Duration:`, value: `${mins} minutes` },
+         { name: `Reason:`, value: `${reason}` },
       )
      // .setFooter(`You can use /unmute to unmute the user earlier than ${mins} minutes and /muteinfo to view information about his mute.`)
       .setTimestamp();
+    if(!reason){reason = 'No reason given'}
     const millisecondsPerMinute = 60 * 1000;
     let MuteInfo = {};
     let time = 0;
@@ -79,14 +81,12 @@ module.exports = {
 
     if (!member.user.bot) member.send({ content: msg });
     member.timeout(time, reason);
-    let mutedMembersArr = await mutedMembers.get(interaction.guild.id);
-   // let guilds = await punishments.get('guilds');
-  //  if (!mutedMembersArr) mutedMembersArr = [];
-//    if (!guilds.includes(interaction.guild.id)) guilds.push(interaction.guild.id);
-//    mutedMembersArr.push(MuteInfo);
-    //await mutedMembers.set(interaction.guild.id, mutedMembersArr);
-    //await punishments.set('guilds', guilds);
-  //  await sendLog(interaction, muteEmbed);
+   /* let mutedMembersArr = await mutedMembers.get(interaction.guild.id);
+    let guilds = await punishments.get('guilds');
+    if (!mutedMembersArr) mutedMembersArr = [];
+    if (!guilds.includes(interaction.guild.id)) guilds.push(interaction.guild.id);
+    mutedMembersArr.push(MuteInfo);
+    await mutedMembers.set(interaction.guild.id, mutedMembersArr); */
     interaction.reply({embeds: [muteEmbed]})
     
   }
