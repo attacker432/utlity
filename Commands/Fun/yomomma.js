@@ -8,10 +8,11 @@ module.exports = {
     .addUserOption((option) => option
       .setName('user')
       .setDescription(`The user this joke is directed to.`)
-      .setRequired(true)
+      .setRequired(false)
     ),
   async execute(interaction) {
     const member = interaction.options.getMember('user');
+    if(!member){member = interaction.user.tag}
     const response = await fetch('https://api.yomomma.info/');
     const data = await response.json();
     interaction.reply({ content: `> ${member}, ${data.joke}` });
