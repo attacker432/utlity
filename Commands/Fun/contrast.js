@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageAttachment } = require('discord.js');
+const { AttachmentBuilder } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
     });
     const bufferArray = await response.arrayBuffer();
     const buffer = Buffer.from(bufferArray);
-    const image = new MessageAttachment(buffer);
+    const image = new AttachmentBuilder(buffer);
     interaction.editReply({ files: [image] });
   }
 }
