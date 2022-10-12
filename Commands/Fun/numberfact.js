@@ -12,15 +12,17 @@ module.exports = {
     )
    .addStringOption((option) => option
       .setName('type')
-      .setDescription(`Aviable types: **date**, **math** and **trivia**`)
+      .setDescription(`Aviable types: **date**, **math**, **trivia** and **year**`)
       .setRequired(true)
     ),
   async execute(interaction) {
-    let number = interaction.options.getString('name');
+    let number = interaction.options.getNumber('number');
+    let type = interaction.options.getString('type');
    // if(!member){member = interaction.user.tag}
-    const response = await fetch(`http://numbersapi.com/#${number}`)
-
-    const data = await response.json();
-    interaction.reply({ content: `> name: **${name}**, age: **${data.age}**, count: **${data.count}**` });
+    const response = await fetch(`http://numbersapi.com/${number}/${type}`)
+//console.log(response)
+    const data = await response();
+    
+    interaction.reply({ content: `${data}`, emphereral: true });
   }
 }
