@@ -26,6 +26,7 @@ module.exports = {
     const note = '```' + noteValue + '```' + `Added by ${interaction.member.user.username} on ${moment(interaction.createdTimestamp).format('LL')}, at ${moment(interaction.createdTimestamp).format('LT')} GMT\n`;
     notes.push(note);
     await nts.set(`notes_${member.id}_${interaction.guild.id}`, notes);
+    console.log(nts)
     await interaction.reply({ content: `Note successfully added on ${member.user.username}'s account`, ephemeral: true });
   }
 }

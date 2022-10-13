@@ -19,7 +19,7 @@ module.exports = {
     let content = '';
     const notes = await nts.get(`notes_${member.id}_${interaction.guild.id}`);
     if (notes) notes.forEach((note) => content += note);
-    if (!notes[0]) interaction.reply({ content: `There are no notes linked to ${member.user.username}.`, ephemeral: true });
+    if (!notes) interaction.reply({ content: `There are no notes linked to ${member.user.username}.`, ephemeral: true });
     else {
       let color = getRoleColor(interaction.guild);
       const viewNotesEmbed = new MessageEmbed()
@@ -28,7 +28,8 @@ module.exports = {
         .setDescription(content)
         .setTimestamp();
       interaction.member.user.send({ embeds: [viewNotesEmbed] });
+      console.log(nts)
     }
-    interaction.reply({ content: `Check your inbox.`, ephemeral: true });
+   // interaction.reply({ content: `Check your inbox.`, ephemeral: true });
   }
 }
